@@ -1,0 +1,1921 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EngineDefine xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://schemas.datacontract.org/2004/07/MyShogi.Model.Shogi.EngineDefine">
+
+  <BannerFileName>banner.png</BannerFileName>
+  <Description>やねうら王のソースコードからMyShogiInstallerによって自動ビルドされたものです。モデルファイルが商用版と異なるため棋力設定の段位は実際の段位と異なります。
+  </Description>
+  <DescriptionSimple>やねうら王 2018年度版(MyShogiInstallerによる自動ビルド)</DescriptionSimple>
+  <DisplayName>やねうら王</DisplayName>
+  <DisplayOrder>10005</DisplayOrder>
+  <EngineExeName>Yaneuraou2018_kpp_kkpt</EngineExeName>
+  <EngineOptionDescriptions>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューターが思考する時にハッシュメモリというものを使います。
+      これは、一度調べた局面の情報を保存しておくために必要です。
+      ハッシュ用のメモリが不十分だと探索の効率が落ちます。(コンピューターの棋力が弱くなります)
+      読み筋の表示されるウインドウの右上に『HASH使用率』というのが表示されています。
+      1手に使う思考時間が伸びていくと、この『HASH使用率が』増えていきますが、その時に
+      この数字があまりに高いと、ハッシュメモリが足りていなくて読みの効率が落ちていることを意味します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>ハッシュメモリ管理</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>このオプションを有効にすると、空き物理メモリから『Hash割合』の分だけ自動的にハッシュメモリを割当てます。
+      このオプションを無効にすると、『Hash[MB]』の分だけ強制的にハッシュメモリを割り当てます。
+      ※　ハッシュメモリについての詳しい説明は『ハッシュメモリ管理』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>ハッシュメモリを自動的に割り当てます。</DescriptionSimple>
+      <DisplayName>自動ハッシュ</DisplayName>
+      <Hide>false</Hide>
+      <Name>AutoHash_</Name>
+      <UsiBuildString>option name AutoHash_ type check default true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>上記の『自動ハッシュ割当』をオンにしている時に、空き物理メモリの何%をハッシュメモリに用いるかを設定します。
+      『自動ハッシュ割当』がオフの時は、この値は無視されます。
+      0%～100%までの数値で指定できます。小さな値を指定した場合、思考エンジンの最低必要ハッシュメモリに足りなくなるので
+      その場合、後者の数値が優先されます。 物理メモリが足りなくなる場合には、ここを少なめに設定してみてください。
+      ※　ハッシュメモリについての詳しい説明は『ハッシュメモリ管理』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>空き物理メモリの何%をハッシュメモリに用いるかを設定します。</DescriptionSimple>
+      <DisplayName>Hash割合</DisplayName>
+      <Hide>false</Hide>
+      <Name>AutoHashPercentage_</Name>
+      <UsiBuildString>option name AutoHashPercentage_ type spin default 70 min 0 max 100</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>上記の『自動ハッシュ割当』をオフにしている時に、何[MB]をハッシュメモリに用いるかを手動で設定します。
+      『自動ハッシュ割当』がオンの時は、この値は無視されます。
+      ここで指定した値が思考エンジンの最低必要ハッシュメモリに満たない場合、後者の値が優先されます。
+      物理メモリが足りなくなる場合には、ここを少なめに設定してみてください。
+      ※　ハッシュメモリについての詳しい説明は『ハッシュメモリ管理』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>何MBをハッシュメモリに用いるかを設定します。</DescriptionSimple>
+      <DisplayName>Hash[MB]</DisplayName>
+      <Hide>false</Hide>
+      <Name>Hash_</Name>
+      <UsiBuildString>option name Hash_ type spin default 4096 min 0 max 1048576</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューターが思考する時にCPUのコア数分までは並列的に探索したほうが強くなります。
+      例えば、4スレッドなら4つ並列して探索するという意味です。ここではその設定を行います。
+      スレッド数を増やすとCPU負荷率が上がります。
+      CPUの温度を下げたい時などは(『自動スレッド』をオフにして)『スレッド数』を減らしてみてください。
+      また、スレッド数に比例してメモリを消費するので(1スレッド当たり50MB程度)、
+      空き物理メモリがギリギリで動かない環境では、スレッド数を減らすと効果がある場合があります。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>スレッド設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>このオプションを有効にすると、思考の時に使用するスレッド数が、
+      自動的にこのPCに搭載されているCPUの物理コアの数になります。
+      （Hyper-Threadingを有効にしている時も、論理コアの数ではなく
+      物理コアの数が自動的に設定されるので、このときCPU負荷は50%程度になります。）
+      また、このオプションを無効にすると、『スレッド数』で指定した数だけスレッドを強制的に割り当てます。
+      ※　スレッドについての詳しい説明は『スレッド設定』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>
+      思考の時に用いるスレッド数を自動的に決定します。</DescriptionSimple>
+      <DisplayName>自動スレッド</DisplayName>
+      <Hide>false</Hide>
+      <Name>AutoThread_</Name>
+      <UsiBuildString>option name AutoThread_ type check default true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>『自動スレッド』がオフの時は、ここで設定されたスレッド数に従って、思考時のスレッド数を決定します。
+      『自動スレッド』がオンの時は、ここで設定した値は無視されます。
+      並列的に探索するので、この値はCPUの論理コアの数までは増やしたほうが、普通は強くなります。
+      スレッド数を増やすとCPU負荷率が上がります。CPUの温度を下げたい時などはこの設定でスレッド数を減らしてみてください。
+      なお、PCの論理コア数より増やしても棋力は普通、上がりません。
+      ※　スレッドについての詳しい説明は『スレッド設定』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>手動でスレッド数を指定したい時に使います。</DescriptionSimple>
+      <DisplayName>スレッド数</DisplayName>
+      <Hide>false</Hide>
+      <Name>Threads</Name>
+      <UsiBuildString>option name Threads type spin default 4 min 1 max 4096</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューターが用いる定跡はここで設定します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>定跡設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューターが用いる定跡ファイルの配置フォルダを指定できます。
+      思考エンジンの存在するフォルダからの相対パスで ../../book のように指定するか、 c:/user/xxx
+      のように絶対パスで指定するかします。前者が便利だと思います。
+      詳しい人向けの設定であり、変更することはお勧めしません。</Description>
+      <DescriptionSimple>
+      コンピューターが用いる定跡ファイルの配置フォルダです。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookDir</Name>
+      <UsiBuildString>option name BookDir type string default ../../book</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName>
+      no_book,定跡なし,standard_book.db,標準定跡,yaneura_book1.db,やねうら大定跡,yaneura_book3.db,真やねうら定跡</ComboboxDisplayName>
+      <Description>各エンジンのフォルダ配下のbookフォルダ内にある定跡ファイルが読み込まれます。 
+	  標準定跡 : 出現頻度の情報付き、評価値の情報なしの小さな定跡です。 
+	  やねうら大定跡 : 浅い読み(depth18)で作った評価値付きの大きな定跡です。評価値・depth情報付き、出現頻度情報なし。
+      真やねうら定跡 : 深い読み(depth28)で作った評価値付きの小さな定跡です。評価値・depth情報付き、出現頻度情報なし。
+	  </Description>
+      <DescriptionSimple>コンピューターが用いる定跡ファイル。</DescriptionSimple>
+      <DisplayName>定跡ファイル</DisplayName>
+      <Hide>false</Hide>
+      <Name>BookFile</Name>
+      <UsiBuildString>option name BookFile type combo default standard_book.db var no_book var standard_book.db var yaneura_book1.db var yaneura_book3.db</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この設定をオンにすると、定跡ファイルを対局開始時にメモリに丸読みしません。
+      大きな定跡ファイルに対しては、対局開始時に丸読みしなくて済むので
+      起動時間が短くなる効果と空き物理メモリが節約できる効果がありますが、そんな巨大な定跡ファイルを使うことはあまりないため、デフォルトではオフになっています。
+      また、このオプションをオンにするには定跡ファイルがこのオプションに対応している必要があります。
+      (このオプション非対応の定跡があります)
+      ※　局面順にソート(並び替え)されている必要があります。定跡フォーマットに詳しくない人はオンにしないでください。</Description>
+      <DescriptionSimple>
+      定跡ファイルを対局開始時にメモリに丸読みしない。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookOnTheFly</Name>
+      <UsiBuildString>option name BookOnTheFly type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>
+      例えば、定跡を16手目まで使用したい(17手目からは定跡を使わない)なら16を指定します。</Description>
+      <DescriptionSimple>定跡を用いる手数(0=未使用)。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookMoves</Name>
+      <UsiBuildString>option name BookMoves type spin default 16 min 0 max 10000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡を用いると毎回同じような対局内容になるのを回避するために、
+      ここで指定した確率で定跡を採択せずに自力で思考させることが出来ます。
+      例えば、30を指定すると30%の確率で定跡にhitしてもそれを無視して自力で思考します。</Description>
+      <DescriptionSimple>
+      一定の確率で定跡を無視して自力で思考させる確率[%]</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookIgnoreRate</Name>
+      <UsiBuildString>option name BookIgnoreRate type spin default 0 min 0 max 100</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡の指し手で1番目の候補の指し手と、2番目以降の候補の指し手との評価値の差が、
+      この範囲内であれば採用する。(1番目の候補の指し手しか選ばれて欲しくないときは0を指定する)
+      指し手に評価値がついている定跡ファイルに対してのみ有効です。</Description>
+      <DescriptionSimple>定跡の第一候補手との評価値の差</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookEvalDiff</Name>
+      <UsiBuildString>option name BookEvalDiff type spin default 30 min 0 max 99999</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡の指し手のうち、先手のときの評価値の下限。これより評価値が低くなる指し手は選択しない。
+      指し手に評価値がついている定跡ファイルに対してのみ有効です。</Description>
+      <DescriptionSimple>定跡の先手の評価値下限</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookEvalBlackLimit</Name>
+      <UsiBuildString>option name BookEvalBlackLimit type spin default 0 min -99999 max 99999</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡の指し手のうち、後手のときの評価値の下限。これより評価値が低くなる指し手は選択しない。
+      指し手に評価値がついている定跡ファイルに対してのみ有効です。</Description>
+      <DescriptionSimple>定跡の後手の評価値下限</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookEvalWhiteLimit</Name>
+      <UsiBuildString>option name BookEvalWhiteLimit type spin default -140 min -99999 max 99999</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡に登録されている指し手の(定跡生成時の)depthがこれを下回るなら採用しない。
+      0を指定するとdepth無視。
+      指し手にdepth情報がついている定跡ファイルに対してのみ有効です。</Description>
+      <DescriptionSimple>定跡の指し手のdepth下限</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>BookDepthLimit</Name>
+      <UsiBuildString>option name BookDepthLimit type spin default 16 min 0 max 99999</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡ファイルの指し手に、出現頻度の情報がついている時に、
+      出現頻度が低い指し手は採用しないためのオプション。</Description>
+      <DescriptionSimple>実現確率の低い定跡を採用しない</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NarrowBook</Name>
+      <UsiBuildString>option name NarrowBook type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>定跡ファイルの指し手に、出現頻度の情報がついている時に、
+      その出現頻度に比例する形でランダムに指し手を選択する。
+      このオプションをオフにしている時は、定跡の指し手が等確率で選択されます。</Description>
+      <DescriptionSimple>定跡の指し手の選択を出現頻度に比例させる</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>ConsiderBookMoveCount</Name>
+      <UsiBuildString>option name ConsiderBookMoveCount type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューター側の持将棋の設定を変更します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>持将棋の設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この項目を変更する時は、対局設定のほうの『指定手数で引き分けとする』も
+      この設定に合わせて変更してください。
+      またこの項目に0を指定した場合、この設定は無効(手数による持将棋を適用せず)になります。</Description>
+      <DescriptionSimple>
+      この手数になると持将棋で引き分けとして扱います。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>MaxMovesToDraw</Name>
+      <UsiBuildString>option name MaxMovesToDraw type spin default 0 min 0 max 100000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName>
+      NoEnteringKing,入玉ルールなし,CSARule27,27点法(CSAルール),CSARule24,24点法(CSAルール),TryRule,トライルール</ComboboxDisplayName>
+      <Description>この項目を変更する時は、対局設定のほうの入玉設定もこの設定に合わせて変更してください。
+      デフォルトは、27点法です。</Description>
+      <DescriptionSimple>コンピューターの入玉条件を変更します。</DescriptionSimple>
+      <DisplayName>入玉条件</DisplayName>
+      <Hide>false</Hide>
+      <Name>EnteringKingRule</Name>
+      <UsiBuildString>option name EnteringKingRule type combo default CSARule27 var NoEnteringKing var CSARule24 var CSARule27 var TryRule</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータの最小思考時間や着手時の遅延時間を設定します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>思考時間設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータが1手に使う最小時間を設定します。単位は[ms]です。
+      例えば、この値を2000に設定すると、コンピューターは少なくとも2秒は考えます。
+      (実際には『NetworkDelay』の分だけ早く指し手を返します。)
+      2秒の考慮時間でも秒未満が切り捨てられて計測上1秒になるルール下では2000に設定するのがベストです。</Description>
+      <DescriptionSimple>
+      コンピュータが1手に使う最小時間を設定します。単位は[ms]です。</DescriptionSimple>
+      <DisplayName>最小思考時間</DisplayName>
+      <Hide>false</Hide>
+      <Name>MinimumThinkingTime</Name>
+      <UsiBuildString>option name MinimumThinkingTime type spin default 2000 min 1000 max 100000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータの着手時の遅延時間の設定その1。単位は[ms]です。
+      コンピュータは、ここで指定した時間だけ早めに指し手を返します。
+      例えば、1手3秒で指す予定の時にこの値を350[ms]に設定した場合、2.65秒までに指し手を返します。</Description>
+      <DescriptionSimple>
+      コンピュータの着手時の遅延時間の設定その1。単位は[ms]です。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NetworkDelay</Name>
+      <UsiBuildString>option name NetworkDelay type spin default 350 min 0 max 10000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータの着手時の遅延時間の設定その2。単位は[ms]です。
+      コンピュータは、ここで指定した時間だけ早めに指し手を返します。(切れ負け時用)
+      例えば、秒読み10秒(1手ごとに10秒で、それを過ぎると切れ負け)になる指し手の時に、
+      この値を550[ms]に設定した場合、9.45秒までに指し手を返します。
+      遅いマシンでの対局時に切れ負けになる現象が出る時には、もう少し大きな値(600～800)にしたほうが良いです。
+      またネットワーク対局で、サーバー側が重い場合やネットワーク遅延がある場合には
+      大きめの値(1000～1500)にすることを推奨します。</Description>
+      <DescriptionSimple>
+      コンピュータの着手時の遅延時間の設定その2。単位は[ms]です。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NetworkDelay2</Name>
+      <UsiBuildString>option name NetworkDelay2 type spin default 550 min 0 max 10000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>エンジンの思考の設定です。棋力に直接的な影響のある部分です。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>思考設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>例えば、この項目(MultiPV)を5に設定すると、思考するときに候補手として5手挙げます。
+      このとき、5手分調べないといけなくなるので、MultiPVを1に設定している時の 約5倍の時間がかかるようになります。
+      通常対局の時は1に設定しておくのが一番強くなります。
+      また、検討モードの時は、この設定値は無視され、検討ウィンドウの『候補手』の数が反映されます。</Description>
+      <DescriptionSimple>候補手の数を設定します</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>MultiPV</Name>
+      <UsiBuildString>option name MultiPV type spin default 1 min 1 max 800</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>デフォルトは、100[%]。例えば、この値を70にすると序盤の1手に用いる時間が
+      本来の時間の70%になり、序盤にかける時間が短くなります。</Description>
+      <DescriptionSimple>
+      序盤重視度。大きくすると持ち時間の序盤への配分が増えます。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>SlowMover</Name>
+      <UsiBuildString>option name SlowMover type spin default 100 min 1 max 1000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>例えば、相手からの詰みが見えた時に投了するのであれば、
+      30000(詰みはこれより大きな値)と設定します。 また、序盤で形勢に差がついた時に思考エンジンに投了させたいのであれば、
+      1000～3000ぐらいの数値を設定すると良いでしょう。</Description>
+      <DescriptionSimple>
+      投了スコアです。(相手から見た)評価値がこの値を超えると投了します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>ResignValue</Name>
+      <UsiBuildString>option name ResignValue type spin default 99999 min 0 max 99999</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>大きな値にすると千日手を(無理にでも)打開しやすくなります。
+      千日手の局面のスコア(評価値)は、ここで設定した値に -1 を掛けた値になります。
+      例えば、この値を100に設定すれば、千日手の局面のスコアは-100とみなされます。
+      このとき、-50(歩の半分ぐらいの価値だけ互角より損している局面)になる指し手があるなら、
+      千日手の局面を選ばずにそちらを選びます。
+      デフォルトは2です。(互角に近いなら千日手の局面を回避して欲しいが、無理な打開はして欲しくないので。)</Description>
+      <DescriptionSimple>千日手を受け入れるスコアを設定します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>Contempt</Name>
+      <UsiBuildString>option name Contempt type spin default 2 min -30000 max 30000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>先手のときは千日手を狙いたくなくて、後手のときは千日手を狙いたいような場合、
+      このオプションをオンにすれば、Contemptをそういう解釈にしてくれる。
+      (Contemptを常に先手から見たスコアだとみなしてくれる。) デフォルトではオフです。</Description>
+      <DescriptionSimple>
+      Contemptの設定値を先手番から見た値とするオプション。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>ContemptFromBlack</Name>
+      <UsiBuildString>option name ContemptFromBlack type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この値を0以外に設定すると、その値の探索深さまでしか探索しません。(弱くなります)
+      強さを調整したい時に使います。</Description>
+      <DescriptionSimple>探索深さ制限。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>DepthLimit</Name>
+      <UsiBuildString>option name DepthLimit type spin default 0 min 0 max 2147483647</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この値を0以外に設定すると、その値の探索ノード数(局面数)までしか探索しません。(弱くなります)
+      強さを調整したい時に使います。</Description>
+      <DescriptionSimple>探索ノード制限。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NodesLimit</Name>
+      <UsiBuildString>option name NodesLimit type spin default 0 min 0 max 9223372036854775807</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>《上級者向けの設定項目です。普通使いません。》
+      時間の代わりにノード時間を用いる。この値を0以外に設定すると、有効。
+      時間の代わりに探索ノード数を決めて探索するときのミリ秒当たりのnode数。
+      この値を600と指定した場合、持ち時間1秒に対して600000ノード(の時間が与えられたものとして)探索します。</Description>
+      <DescriptionSimple>node as
+      timeモード。0以外に設定すると有効。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>nodestime</Name>
+      <UsiBuildString>option name nodestime type spin default 0 min 0 max 99999</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この値を20より小さな値にすると手加減します。
+      0が最弱で(R2000以上弱い)、19でも20に設定したときよりR300程度弱いです。</Description>
+      <DescriptionSimple>スキルレベル。棋力の調整用。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>SkillLevel</Name>
+      <UsiBuildString>option name SkillLevel type spin default 20 min 0 max 20</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>敵陣での歩の不成、2段目への香の不成、大駒の不成を読むかの設定です。
+      この設定をオンにすると、それらの指し手も読みます。(その結果、少し弱くなります)
+      検討などで不成が絡むような局面を読ませたいときにオンにすると良いでしょう。</Description>
+      <DescriptionSimple>歩の不成などを読むか。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>GenerateAllLegalMoves</Name>
+      <UsiBuildString>option name GenerateAllLegalMoves type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>評価関数の設定です。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>評価関数の設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>評価関数用のファイルの配置するフォルダを変更する時にこの設定を使います。
+      通常、変更する必要はありません。 思考エンジンの存在するフォルダからの相対パスで ../../xxx_eval
+      のように指定するか、 c:/user/xxx のように絶対パスで指定するかします。前者が便利だと思います。
+      詳しい人向けの設定であり、変更することはお勧めしません。</Description>
+      <DescriptionSimple>評価関数用のファイルのあるフォルダの設定。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>EvalDir</Name>
+      <UsiBuildString>option name EvalDir type string default ../../eval</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>同じ思考エンジンを2つ以上動かす時に、評価関数ファイルをメモリ上で共用する設定です。
+      これをオンにして、同じ思考エンジンを2つ動作させた場合、消費する物理メモリが節約できます。
+      (この機能に対応している思考エンジンの場合のみ)</Description>
+      <DescriptionSimple>評価関数ファイルをメモリ上で共用する設定。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>EvalShare</Name>
+      <UsiBuildString>option name EvalShare type check default true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>読み筋の表示に関する設定です。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>読み筋の表示</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>思考エンジンが読み筋を出力する最小間隔を設定します。
+      これをあまり小さい値にすると読み筋が出力される回数が増えて、見づらくなります。
+      また出力にも時間がかかるため、あまりたくさん出力すると棋力に影響します。
+      ※　ConsiderationModeがオンのときはこの値は無視されます。</Description>
+      <DescriptionSimple>
+      読み筋を出力する最小間隔を設定します。単位は[ms]</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>PvInterval</Name>
+      <UsiBuildString>option name PvInterval type spin default 300 min 0 max 100000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この設定をオンにすると、読み筋が途中で途切れにくくなります。
+      (読み筋の出力頻度は少し減ります。)
+      ※　この設定をオンにした時、PvIntervalの値は無視されます。</Description>
+      <DescriptionSimple>なるべく綺麗な読み筋を出力します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>ConsiderationMode</Name>
+      <UsiBuildString>option name ConsiderationMode type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>fail highというのは、いまの読み筋より良い指し手が存在するらしきことがわかったので、
+      それを調べ直している状態のことです。(fail lowはその逆) そのため、fail
+      low/highのとき読み筋の表示は短くなります。 このオプションをオフにすると、fail
+      low/highの時には読み筋を出力しなくなるので、 短い読み筋が表示されにくくなります。
+      ※　このオプションは、ConsiderationModeオンのときも有効。</Description>
+      <DescriptionSimple>fail
+      low/highのときにPVを出力する。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>OutputFailLHPV</Name>
+      <UsiBuildString>option name OutputFailLHPV type check default true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>デバッグ用の項目です。一般ユーザーが使うことはありません。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>デバッグ用</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>
+      思考エンジンとGUIとのやりとりをエンジン側からファイルに書き出します。</Description>
+      <DescriptionSimple>
+      思考エンジンとGUIとのやりとりをエンジン側からファイルに書き出します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>WriteDebugLog</Name>
+      <UsiBuildString>option name WriteDebugLog type check default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple i:nil="true" />
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>USI_Ponder</Name>
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple i:nil="true" />
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>Param1</Name>
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple i:nil="true" />
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>Param2</Name>
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple i:nil="true" />
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>SkipLoadingEval</Name>
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple i:nil="true" />
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>EvalSaveDir</Name>
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple>その他の設定</DescriptionSimple>
+      <DisplayName>その他</DisplayName>
+      <Hide>true</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+  </EngineOptionDescriptions>
+  <EngineType>0</EngineType>
+  <EvalMemory>480</EvalMemory>
+  <MinimumHashMemory>128</MinimumHashMemory>
+  <Presets>
+    <EnginePreset>
+      <Description>棋力制限一切なしで強さは設定された持ち時間、PCスペックに依存します。
+      CPU負荷率が気になる方は、詳細設定の「スレッド数」のところで調整してください。</Description>
+      <Name>無制限</Name>
+      <Options>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F十二段</Name>
+      <Options>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>2165579</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F十一段</Name>
+      <Options>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1099707</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F十段</Name>
+      <Options>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>558444</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F九段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>283584</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F八段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>144007</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F七段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>73475</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F六段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>39959</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F五段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>22885</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F四段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>13648</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F三段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>8410</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F二段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>5325</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F初段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>3450</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F１級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>2281</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F２級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1534</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F３級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1048</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F４級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>726</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F５級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>509</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F６級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>361</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F７級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>258</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F８級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>187</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F９級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>136</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      短い持ち時間だと切れ負けになるので持ち時間無制限での対局をお願いします。</Description>
+      <Name>F10級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>100</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>20</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF九段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1450000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>13</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF八段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1200000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>11</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF七段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>500000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>10</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF六段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>230000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>9</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF五段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>140000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>8</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF四段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>150000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>7</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF三段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>66000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>6</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF二段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>30000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>6</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF初段</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>22000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>5</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF１級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>17800</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>4</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF２級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>8000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>4</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF３級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>8000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF４級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>5500</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF５級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>3500</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF６級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>2200</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF７級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1500</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF８級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1100</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF９級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>920</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF10級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>800</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>3</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+    <EnginePreset>
+      <Description>
+      棋力名が「Ｓ」で始まるものは、序盤が弱いのに終盤だけ強いということはなく、まんべんなく同じ強さになるように調整されています。思考時間は「Ｓ」のつかない同じ段位のものの10倍ぐらい必要となります。</Description>
+      <Name>ＳF11級</Name>
+      <Options>
+        <EngineOption>
+          <Name>AutoThread_</Name>
+          <Value>false</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>Threads</Name>
+          <Value>2</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>NodesLimit</Name>
+          <Value>1000</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>SkillLevel</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>DepthLimit</Name>
+          <Value>0</Value>
+        </EngineOption>
+        <EngineOption>
+          <Name>MultiPV</Name>
+          <Value>1</Value>
+        </EngineOption>
+      </Options>
+    </EnginePreset>
+  </Presets>
+  <StackPerThread>40</StackPerThread>
+  <SupportedCpus>
+    <CpuType>SSE2</CpuType>
+    <CpuType>SSE41</CpuType>
+    <CpuType>SSE42</CpuType>
+    <CpuType>AVX2</CpuType>
+  </SupportedCpus>
+  <SupportedExtendedProtocol>
+    <ExtendedProtocol>UseHashCommandExtension</ExtendedProtocol>
+    <ExtendedProtocol>HasEvalShareOption</ExtendedProtocol>
+  </SupportedExtendedProtocol>
+  <WorkingMemory>200</WorkingMemory>
+</EngineDefine>
