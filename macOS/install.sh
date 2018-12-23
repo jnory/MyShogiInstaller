@@ -29,11 +29,42 @@ MONO_PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono
 MSBUILD_PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild
 ##############
 
-if [[ $# -ne 1 ]]; then
+function print_usage() {
     echo "使い方: " 1>&2
-    echo "${0} [作業ディレクトリのパス]" 1>&2
-    exit 1
+    echo "${0} [options...] [作業ディレクトリのパス]" 1>&2
+    echo "options:" 1>&2
+    echo "-s n" 1>&2
+    echo "  第nステップ目からインストールを開始します。実行を中断した後続きから再開したいときのために用意されています。" 1>&2
+    echo "  0: 実行環境の確認" 1>&2
+    echo "  1: MyShogi.appの置き場作り" 1>&2
+    echo "  2: MyShogiのビルド" 1>&2
+    echo "  3: やねうら王のビルド" 1>&2
+    echo "  4: SoundPlayerのビルド" 1>&2
+    echo "  5: 画像データのダウンロード" 1>&2
+    echo "  6: 音声データのダウンロード" 1>&2
+    echo "  7: モデルデータのダウンロード" 1>&2
+    echo "  8: 定跡データのダウンロード" 1>&2
+}
+
+####### 引数のパース #######
+# reference: https://shellscript.sunone.me/parameter.html
+START_FROM=0
+while getopts s: OPT; do
+	case ${OPT} in
+	"s" ) START_FROM=${OPTARG};;
+	* ) print_usage
+	    echo ${OPT}
+	    exit 1;;
+	esac
+done
+
+shift `expr ${OPTIND} - 1`
+
+if [[ $# -ne 1 ]]; then
+	print_usage
+	exit 1
 fi
+##############
 
 BASEDIR=`dirname $0`/..
 pushd ${BASEDIR} >& /dev/null
@@ -47,6 +78,7 @@ PREFIX=`pwd`
 popd >& /dev/null
 
 ROOTDIR=${PREFIX}/MyShogi.app/Contents
+
 
 function check_env() {
     echo "必要なコマンドがインストールされているか確認しています" 1>&2
@@ -293,12 +325,38 @@ function download_books() {
     echo "完了" 1>&2
 }
 
-check_env
-prepare_app
-build_myshogi
-build_yaneuraou
-build_soundplayer
-download_images
-download_sounds
-download_models
-download_books
+if [ ${START_FROM} -le 0 ]; then 
+    check_env
+fi
+
+if [ ${START_FROM} -le 1 ]; then 
+    prepare_app
+fi
+
+if [ ${START_FROM} -le 2 ]; then 
+    build_myshogi
+fi
+
+if [ ${START_FROM} -le 3 ]; then 
+    build_yaneuraou
+fi
+
+if [ ${START_FROM} -le 4 ]; then 
+    build_soundplayer
+fi
+
+if [ ${START_FROM} -le 5 ]; then 
+    download_images
+fi
+
+if [ ${START_FROM} -le 6 ]; then 
+    download_sounds
+fi
+
+if [ ${START_FROM} -le 7 ]; then 
+    download_models
+fi
+
+if [ ${START_FROM} -le 8 ]; then 
+    download_books
+fi
