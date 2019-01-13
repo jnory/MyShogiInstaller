@@ -465,7 +465,7 @@ xmlns="http://schemas.datacontract.org/2004/07/MyShogi.Model.Shogi.EngineDefine"
       <DisplayName i:nil="true" />
       <Hide>false</Hide>
       <Name>EvalDir</Name>
-      <UsiBuildString>option name EvalDir type string default ../../eval</UsiBuildString>
+      <UsiBuildString>option name EvalDir type string default ../../eval/</UsiBuildString>
     </EngineOptionDescription>
     <EngineOptionDescription>
       <ComboboxDisplayName i:nil="true" />

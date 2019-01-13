@@ -198,6 +198,7 @@ function compile_yaneuraou() {
     popd >& /dev/null
 
     cp -p ${BASEDIR}/engine_defines/${PACKAGE_NAME}/engine_define.xml ${ROOTDIR}/MacOS/engine/${PACKAGE_NAME}/
+    cp -p ${BASEDIR}/engine_defines/${PACKAGE_NAME}/engine_options.txt ${ROOTDIR}/MacOS/engine/${PACKAGE_NAME}/
     echo -n ")" 1>&2
 }
 

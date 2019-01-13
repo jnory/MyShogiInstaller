@@ -1,0 +1,2 @@
+option name EvalDir type string default ../../eval
+option name BookDir type string default ../../book
