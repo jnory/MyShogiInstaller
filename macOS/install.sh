@@ -198,8 +198,10 @@ function compile_yaneuraou() {
     popd >& /dev/null
 
     cp -p ${BASEDIR}/engine_defines/${PACKAGE_NAME}/engine_define.xml ${ROOTDIR}/MacOS/engine/${PACKAGE_NAME}/
-    cp -p ${BASEDIR}/engine_defines/${PACKAGE_NAME}/engine_options.txt ${ROOTDIR}/MacOS/engine/${PACKAGE_NAME}/
-    echo -n ")" 1>&2
+    if [ -e ${BASEDIR}/engine_defines/${PACKAGE_NAME}/engine_options.txt ]; then
+        cp -p ${BASEDIR}/engine_defines/${PACKAGE_NAME}/engine_options.txt ${ROOTDIR}/MacOS/engine/${PACKAGE_NAME}/
+    fi
+    echo -n ") " 1>&2
 }
 
 function build_yaneuraou() {
@@ -214,9 +216,9 @@ function build_yaneuraou() {
     # compile_yaneuraou YaneuraOu tanuki2018 YANEURAOU_2018_TNK_ENGINE YaneuraOu2018NNUE
     # compile_yaneuraou YaneuraOu yomita2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPPT YaneuraOu2018KPPT
     compile_yaneuraou YaneuraOu yaneuraou2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPP_KKPT yaneuraou2018_kpp_kkpt
-    # compile_yaneuraou YaneuraOu tanuki_mate MATE_ENGINE tanuki_mate
+    compile_yaneuraou YaneuraOu tanuki_mate MATE_ENGINE tanuki_mate
 
-    echo " ... 完了" 1>&2
+    echo "... 完了" 1>&2
     popd >& /dev/null
 }
 

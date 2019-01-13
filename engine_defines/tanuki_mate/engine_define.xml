@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EngineDefine xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://schemas.datacontract.org/2004/07/MyShogi.Model.Shogi.EngineDefine">
+
+  <BannerFileName>banner.png</BannerFileName>
+  <Description>長手数の詰将棋が解ける詰将棋エンジンです。 詰手順が最短手数であることは保証されません。
+  複数スレッドでの探索には対応していません。</Description>
+  <DescriptionSimple>tanuki-詰将棋エンジン</DescriptionSimple>
+  <DisplayName>tanuki-詰将棋エンジン</DisplayName>
+  <DisplayOrder>10006</DisplayOrder>
+  <EngineExeName>tanuki_mate</EngineExeName>
+  <EngineOptionDescriptions>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューターが思考する時にハッシュメモリというものを使います。
+      これは、一度調べた局面の情報を保存しておくために必要です。
+      ハッシュ用のメモリが不十分だと探索の効率が落ちます。(コンピューターの棋力が弱くなります)
+      読み筋の表示されるウインドウの右上に『HASH使用率』というのが表示されています。
+      1手に使う思考時間が伸びていくと、この『HASH使用率が』増えていきますが、その時に
+      この数字があまりに高いと、ハッシュメモリが足りていなくて読みの効率が落ちていることを意味します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>ハッシュメモリ管理</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>
+      このオプションを有効にすると、空き物理メモリから『Hash割合』の分だけ自動的にハッシュメモリを割当てます。
+      このオプションを無効にすると、『Hash[MB]』の分だけ強制的にハッシュメモリを割り当てます。
+      ※　ハッシュメモリについての詳しい説明は『ハッシュメモリ管理』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>ハッシュメモリを自動的に割り当てます。</DescriptionSimple>
+      <DisplayName>自動ハッシュ</DisplayName>
+      <Hide>false</Hide>
+      <Name>AutoHash_</Name>
+      <UsiBuildString>option name AutoHash_ type check default
+      true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>
+      上記の『自動ハッシュ割当』をオフにしている時に、何[MB]をハッシュメモリに用いるかを手動で設定します。
+      『自動ハッシュ割当』がオンの時は、この値は無視されます。
+      ここで指定した値が思考エンジンの最低必要ハッシュメモリに満たない場合、後者の値が優先されます。
+      物理メモリが足りなくなる場合には、ここを少なめに設定してみてください。
+      ※　ハッシュメモリについての詳しい説明は『ハッシュメモリ管理』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>
+      何MBをハッシュメモリに用いるかを設定します。</DescriptionSimple>
+      <DisplayName>Hash[MB]</DisplayName>
+      <Hide>false</Hide>
+      <Name>Hash_</Name>
+      <UsiBuildString>option name Hash_ type spin default 4096 min
+      0 max 1048576</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューターが思考する時にCPUのコア数分までは並列的に探索したほうが強くなります。
+      例えば、4スレッドなら4つ並列して探索するという意味です。ここではその設定を行います。
+      スレッド数を増やすとCPU負荷率が上がります。
+      CPUの温度を下げたい時などは(『自動スレッド』をオフにして)『スレッド数』を減らしてみてください。
+      また、スレッド数に比例してメモリを消費するので(1スレッド当たり50MB程度)、
+      空き物理メモリがギリギリで動かない環境では、スレッド数を減らすと効果がある場合があります。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>スレッド設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>このオプションを有効にすると、思考の時に使用するスレッド数が、
+      自動的にこのPCに搭載されているCPUの物理コアの数になります。
+      （Hyper-Threadingを有効にしている時も、論理コアの数ではなく
+      物理コアの数が自動的に設定されるので、このときCPU負荷は50%程度になります。）
+      また、このオプションを無効にすると、『スレッド数』で指定した数だけスレッドを強制的に割り当てます。
+      ※　スレッドについての詳しい説明は『スレッド設定』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>
+      思考の時に用いるスレッド数を自動的に決定します。</DescriptionSimple>
+      <DisplayName>自動スレッド</DisplayName>
+      <Hide>false</Hide>
+      <Name>AutoThread_</Name>
+      <UsiBuildString>option name AutoThread_ type check default
+      true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>
+      『自動スレッド』がオフの時は、ここで設定されたスレッド数に従って、思考時のスレッド数を決定します。
+      『自動スレッド』がオンの時は、ここで設定した値は無視されます。
+      並列的に探索するので、この値はCPUの論理コアの数までは増やしたほうが、普通は強くなります。
+      スレッド数を増やすとCPU負荷率が上がります。CPUの温度を下げたい時などはこの設定でスレッド数を減らしてみてください。
+      なお、PCの論理コア数より増やしても棋力は普通、上がりません。
+      ※　スレッドについての詳しい説明は『スレッド設定』のところにマウスをホバーさせてください。</Description>
+      <DescriptionSimple>手動でスレッド数を指定したい時に使います。</DescriptionSimple>
+      <DisplayName>スレッド数</DisplayName>
+      <Hide>false</Hide>
+      <Name>Threads</Name>
+      <UsiBuildString>option name Threads type spin default 4 min 1
+      max 4096</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピューター側の持将棋の設定を変更します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>持将棋の設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この項目を変更する時は、対局設定のほうの『指定手数で引き分けとする』も
+      この設定に合わせて変更してください。
+      またこの項目に0を指定した場合、この設定は無効(手数による持将棋を適用せず)になります。</Description>
+      <DescriptionSimple>
+      この手数になると持将棋で引き分けとして扱います。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>MaxMovesToDraw</Name>
+      <UsiBuildString>option name MaxMovesToDraw type spin default
+      0 min 0 max 100000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータの最小思考時間や着手時の遅延時間を設定します。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>思考時間設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータが1手に使う最小時間を設定します。単位は[ms]です。
+      例えば、この値を2000に設定すると、コンピューターは少なくとも2秒は考えます。
+      (実際には『NetworkDelay』の分だけ早く指し手を返します。)
+      2秒の考慮時間でも秒未満が切り捨てられて計測上1秒になるルール下では2000に設定するのがベストです。</Description>
+      <DescriptionSimple>
+      コンピュータが1手に使う最小時間を設定します。単位は[ms]です。</DescriptionSimple>
+      <DisplayName>最小思考時間</DisplayName>
+      <Hide>false</Hide>
+      <Name>MinimumThinkingTime</Name>
+      <UsiBuildString>option name MinimumThinkingTime type spin
+      default 2000 min 1000 max 100000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータの着手時の遅延時間の設定その1。単位は[ms]です。
+      コンピュータは、ここで指定した時間だけ早めに指し手を返します。
+      例えば、1手3秒で指す予定の時にこの値を350[ms]に設定した場合、2.65秒までに指し手を返します。</Description>
+      <DescriptionSimple>
+      コンピュータの着手時の遅延時間の設定その1。単位は[ms]です。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NetworkDelay</Name>
+      <UsiBuildString>option name NetworkDelay type spin default
+      350 min 0 max 10000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>コンピュータの着手時の遅延時間の設定その2。単位は[ms]です。
+      コンピュータは、ここで指定した時間だけ早めに指し手を返します。(切れ負け時用)
+      例えば、秒読み10秒(1手ごとに10秒で、それを過ぎると切れ負け)になる指し手の時に、
+      この値を550[ms]に設定した場合、9.45秒までに指し手を返します。
+      遅いマシンでの対局時に切れ負けになる現象が出る時には、もう少し大きな値(600～800)にしたほうが良いです。
+      またネットワーク対局で、サーバー側が重い場合やネットワーク遅延がある場合には
+      大きめの値(1000～1500)にすることを推奨します。</Description>
+      <DescriptionSimple>
+      コンピュータの着手時の遅延時間の設定その2。単位は[ms]です。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NetworkDelay2</Name>
+      <UsiBuildString>option name NetworkDelay2 type spin default
+      550 min 0 max 10000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>エンジンの思考の設定です。棋力に直接的な影響のある部分です。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>思考設定</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>例えば、この項目(MultiPV)を5に設定すると、思考するときに候補手として5手挙げます。
+      このとき、5手分調べないといけなくなるので、MultiPVを1に設定している時の 約5倍の時間がかかるようになります。
+      通常対局の時は1に設定しておくのが一番強くなります。
+      また、検討モードの時は、この設定値は無視され、検討ウィンドウの『候補手』の数が反映されます。</Description>
+      <DescriptionSimple>候補手の数を設定します</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>MultiPV</Name>
+      <UsiBuildString>option name MultiPV type spin default 1 min 1
+      max 800</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>デフォルトは、100[%]。例えば、この値を70にすると序盤の1手に用いる時間が
+      本来の時間の70%になり、序盤にかける時間が短くなります。</Description>
+      <DescriptionSimple>
+      序盤重視度。大きくすると持ち時間の序盤への配分が増えます。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>SlowMover</Name>
+      <UsiBuildString>option name SlowMover type spin default 100
+      min 1 max 1000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>大きな値にすると千日手を(無理にでも)打開しやすくなります。
+      千日手の局面のスコア(評価値)は、ここで設定した値に -1 を掛けた値になります。
+      例えば、この値を100に設定すれば、千日手の局面のスコアは-100とみなされます。
+      このとき、-50(歩の半分ぐらいの価値だけ互角より損している局面)になる指し手があるなら、
+      千日手の局面を選ばずにそちらを選びます。
+      デフォルトは2です。(互角に近いなら千日手の局面を回避して欲しいが、無理な打開はして欲しくないので。)</Description>
+      <DescriptionSimple>千日手を受け入れるスコアを設定します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>Contempt</Name>
+      <UsiBuildString>option name Contempt type spin default 2 min
+      -30000 max 30000</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>先手のときは千日手を狙いたくなくて、後手のときは千日手を狙いたいような場合、
+      このオプションをオンにすれば、Contemptをそういう解釈にしてくれる。
+      (Contemptを常に先手から見たスコアだとみなしてくれる。) デフォルトではオフです。</Description>
+      <DescriptionSimple>
+      Contemptの設定値を先手番から見た値とするオプション。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>ContemptFromBlack</Name>
+      <UsiBuildString>option name ContemptFromBlack type check
+      default false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この値を0以外に設定すると、その値の探索深さまでしか探索しません。(弱くなります)
+      強さを調整したい時に使います。</Description>
+      <DescriptionSimple>探索深さ制限。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>DepthLimit</Name>
+      <UsiBuildString>option name DepthLimit type spin default 0
+      min 0 max 2147483647</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この値を0以外に設定すると、その値の探索ノード数(局面数)までしか探索しません。(弱くなります)
+      強さを調整したい時に使います。</Description>
+      <DescriptionSimple>探索ノード制限。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>NodesLimit</Name>
+      <UsiBuildString>option name NodesLimit type spin default 0
+      min 0 max 9223372036854775807</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>評価関数用のファイルの配置するフォルダを変更する時にこの設定を使います。
+      通常、変更する必要はありません。 思考エンジンの存在するフォルダからの相対パスで ../../xxx_eval
+      のように指定するか、 c:/user/xxx のように絶対パスで指定するかします。前者が便利だと思います。
+      詳しい人向けの設定であり、変更することはお勧めしません。</Description>
+      <DescriptionSimple>評価関数用のファイルのあるフォルダの設定。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>true</Hide>
+      <Name>EvalDir</Name>
+      <UsiBuildString>option name EvalDir type string default
+      eval</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>読み筋の表示に関する設定です。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>読み筋の表示</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>この項目をオンにすると、なるべく正確な詰み手順を返すようになります。
+      オフにしていると受け方(詰みを逃れる側)が最長になるように逃げる手順になりません。
+      ただし、この項目をオンにしても攻め方(詰ます側)が最短手順の詰みになる手順を選択するとは限りません。</Description>
+      <DescriptionSimple>なるべく正確な詰み手順を返します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>MorePreciseMatePv</Name>
+      <UsiBuildString>option name MorePreciseMatePv type check
+      default true</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>デバッグ用の項目です。一般ユーザーが使うことはありません。</Description>
+      <DescriptionSimple i:nil="true" />
+      <DisplayName>デバッグ用</DisplayName>
+      <Hide>false</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description>
+      思考エンジンとGUIとのやりとりをエンジン側からファイルに書き出します。</Description>
+      <DescriptionSimple>
+      思考エンジンとGUIとのやりとりをエンジン側からファイルに書き出します。</DescriptionSimple>
+      <DisplayName i:nil="true" />
+      <Hide>false</Hide>
+      <Name>WriteDebugLog</Name>
+      <UsiBuildString>option name WriteDebugLog type check default
+      false</UsiBuildString>
+    </EngineOptionDescription>
+    <EngineOptionDescription>
+      <ComboboxDisplayName i:nil="true" />
+      <Description i:nil="true" />
+      <DescriptionSimple>その他の設定</DescriptionSimple>
+      <DisplayName>その他</DisplayName>
+      <Hide>true</Hide>
+      <Name i:nil="true" />
+      <UsiBuildString i:nil="true" />
+    </EngineOptionDescription>
+  </EngineOptionDescriptions>
+  <EngineType>1</EngineType>
+  <EvalMemory>0</EvalMemory>
+  <MinimumHashMemory>128</MinimumHashMemory>
+  <Presets />
+  <StackPerThread>40</StackPerThread>
+  <SupportedCpus>
+    <CpuType>SSE2</CpuType>
+    <CpuType>SSE41</CpuType>
+    <CpuType>SSE42</CpuType>
+    <CpuType>AVX2</CpuType>
+  </SupportedCpus>
+  <SupportedExtendedProtocol>
+    <ExtendedProtocol>UseHashCommandExtension</ExtendedProtocol>
+    <ExtendedProtocol>HasEvalShareOption</ExtendedProtocol>
+    <ExtendedProtocol>GoMateNodesExtension</ExtendedProtocol>
+  </SupportedExtendedProtocol>
+  <WorkingMemory>200</WorkingMemory>
+</EngineDefine>
