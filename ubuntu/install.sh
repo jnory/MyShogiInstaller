@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# TODO: macOS/install.sh との共通部分をリファクタ
 
 set -e
 
@@ -12,10 +13,6 @@ popd >& /dev/null
 . ${BASEDIR}/common/download.sh
 . ${BASEDIR}/common/util.sh
 
-####### (macOS専用) 環境設定 #######
-MONO_PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands/mono
-MSBUILD_PATH=/Library/Frameworks/Mono.framework/Versions/Current/Commands/msbuild
-##############
 
 ####### 引数のパース #######
 # reference: https://shellscript.sunone.me/parameter.html
@@ -43,21 +40,21 @@ pushd ${PREFIX} >& /dev/null
 PREFIX=`pwd`
 popd >& /dev/null
 
-ROOTDIR=${PREFIX}/MyShogi.app/Contents
+ROOTDIR=${PREFIX}/Linux
 
 
 function check_env() {
     echo "必要なコマンドがインストールされているか確認しています" 1>&2
 
     echo -n "mono ... " 1>&2
-    if [[ ! -e ${MONO_PATH} ]]; then
+    if [[ ! `which mono` ]]; then
         echo "NG" 1>&2
         exit 1
     fi
     echo "ok" 1>&2
 
     echo -n "msbuild ... " 1>&2
-    if [[ ! -e ${MSBUILD_PATH} ]]; then
+    if [[ ! `which msbuild` ]]; then
         echo "NG" 1>&2
         exit 1
     fi
@@ -111,15 +108,12 @@ function check_env() {
 function prepare_app() {
     echo -n "事前準備 ... " 1>&2
 
-    # reference: https://qiita.com/h12o/items/1410707dd9e7135d207a
-    mkdir -p ${ROOTDIR}/MacOS
-    mkdir -p ${ROOTDIR}/Resources
+    mkdir -p ${ROOTDIR}
 
-    mkdir -p ${ROOTDIR}/MacOS/engine
-    mkdir -p ${ROOTDIR}/MacOS/eval
-    mkdir -p ${ROOTDIR}/MacOS/book
-    cp -p ${BASEDIR}/macOS/resource/Info.plist ${ROOTDIR}
-    cp -p ${BASEDIR}/macOS/resource/run.sh ${ROOTDIR}/MacOS
+    mkdir -p ${ROOTDIR}/engine
+    mkdir -p ${ROOTDIR}/eval
+    mkdir -p ${ROOTDIR}/book
+    cp -p ${BASEDIR}/ubuntu/resource/run.sh ${ROOTDIR}
 
     echo "完了" 1>&2
 }
@@ -128,34 +122,34 @@ if [ ${START_FROM} -le 0 ]; then
     check_env
 fi
 
-if [ ${START_FROM} -le 1 ]; then 
+if [ ${START_FROM} -le 1 ]; then
     prepare_app
 fi
 
-if [ ${START_FROM} -le 2 ]; then 
-    build_myshogi ${PREFIX} ${MYSHOGI_REPOS} ${MYSHOGI_VERSION} macOS ${ROOTDIR}/MacOS
+if [ ${START_FROM} -le 2 ]; then
+    build_myshogi ${PREFIX} ${MYSHOGI_REPOS} ${MYSHOGI_VERSION} Linux ${ROOTDIR}
 fi
 
-if [ ${START_FROM} -le 3 ]; then 
-    build_yaneuraou ${PREFIX} ${YANEURAOU_REPOS} ${YANEURAOU_VERSION} ${ROOTDIR}/MacOS ${BASEDIR}/engine_defines
+if [ ${START_FROM} -le 3 ]; then
+    build_yaneuraou ${PREFIX} ${YANEURAOU_REPOS} ${YANEURAOU_VERSION} ${ROOTDIR} ${BASEDIR}/engine_defines
 fi
 
-if [ ${START_FROM} -le 4 ]; then 
-    build_soundplayer ${PREFIX} ${SOUNDPLAYER_REPOS} ${SOUNDPLAYER_VERSION} macos macOS ${ROOTDIR}/MacOS dylib
+if [ ${START_FROM} -le 4 ]; then
+    build_soundplayer ${PREFIX} ${SOUNDPLAYER_REPOS} ${SOUNDPLAYER_VERSION} linux Linux ${ROOTDIR} so
 fi
 
 if [ ${START_FROM} -le 5 ]; then
-    download_images ${PREFIX} ${IMAGES_REPOS} ${IMAGES_VERSION} ${ROOTDIR}/MacOS
+    download_images ${PREFIX} ${IMAGES_REPOS} ${IMAGES_VERSION} ${ROOTDIR}
 fi
 
-if [ ${START_FROM} -le 6 ]; then 
-    download_sounds ${PREFIX} ${SOUND_REPOS} ${SOUND_VERSION} ${ROOTDIR}/MacOS
+if [ ${START_FROM} -le 6 ]; then
+    download_sounds ${PREFIX} ${SOUND_REPOS} ${SOUND_VERSION} ${ROOTDIR}
 fi
 
-if [ ${START_FROM} -le 7 ]; then 
-    download_models ${PREFIX} ${MODEL_PATH} ${BASEDIR}/checksums ${ROOTDIR}/MacOS
+if [ ${START_FROM} -le 7 ]; then
+    download_models ${PREFIX} ${MODEL_PATH} ${BASEDIR}/checksums ${ROOTDIR}
 fi
 
-if [ ${START_FROM} -le 8 ]; then 
-    download_books ${PREFIX} ${BOOK_PATH_STANDARD} ${BOOK_PATH_YANEURA_BOOK1} ${BOOK_PATH_YANEURA_BOOK3} ${BASEDIR}/checksums ${ROOTDIR}/MacOS
+if [ ${START_FROM} -le 8 ]; then
+    download_books ${PREFIX} ${BOOK_PATH_STANDARD} ${BOOK_PATH_YANEURA_BOOK1} ${BOOK_PATH_YANEURA_BOOK3} ${BASEDIR}/checksums ${ROOTDIR}
 fi

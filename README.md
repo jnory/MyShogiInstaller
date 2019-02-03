@@ -6,14 +6,21 @@ MyShogi (https://github.com/yaneurao/MyShogi) の私家版インストーラー�
 
 ## 対応環境
 
-現在macOSのみの対応です。
+- macOS
+- Ubuntu
 
-## 使い方
-  
+## macOS
+
 以下のコマンドを実行すると./buildの中にMyShogi.appが完成します。
 
   > ./macOS/install.sh ./build
-  
+
+## Ubuntu
+
+以下のコマンドを実行すると./build/Linux/run.shが完成します。
+
+  > ./ubuntu/install.sh ./build
+
 ## 必要なコマンド類
 
 おそらく以下のコマンドが入っていればビルドできるはずです。
@@ -26,6 +33,8 @@ MyShogi (https://github.com/yaneurao/MyShogi) の私家版インストーラー�
 * g++
 * curl
 * unzip
+
+Ubuntuの場合、libpulse-devも必要です。
 
 入っていなければ事前にインストールしておいて下さい。
 なお、homebrewに入っているmonoでは起動しませんので
@@ -40,7 +49,7 @@ monoは公式サイトからインストーラーを使ってインストール�
 
 ## ライセンス
 
-GPL v3  
+GPL v3
 
 ## ありそうな質問
 
