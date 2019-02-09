@@ -131,7 +131,7 @@ if [ ${START_FROM} -le 2 ]; then
 fi
 
 if [ ${START_FROM} -le 3 ]; then
-    build_yaneuraou ${PREFIX} ${YANEURAOU_REPOS} ${YANEURAOU_VERSION} ${ROOTDIR} ${BASEDIR}/engine_defines
+    build_yaneuraou ${PREFIX} ${YANEURAOU_REPOS} ${YANEURAOU_VERSION} ${ROOTDIR} ${BASEDIR}/engine_defines ${BASEDIR}/common/YaneuraOu.patch
 fi
 
 if [ ${START_FROM} -le 4 ]; then

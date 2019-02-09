@@ -48,8 +48,10 @@ function compile_yaneuraou() {
     popd >& /dev/null
 
     cp -p ${ENGINE_DEFINES}/${PACKAGE_NAME}/engine_define.xml ${TARGET_DIR}/engine/${PACKAGE_NAME}/
-    cp -p ${ENGINE_DEFINES}/${PACKAGE_NAME}/engine_options.txt ${TARGET_DIR}/engine/${PACKAGE_NAME}/
-    echo -n ")" 1>&2
+    if [ -e ${ENGINE_DEFINES}/${PACKAGE_NAME}/engine_options.txt ]; then
+        cp -p ${ENGINE_DEFINES}/${PACKAGE_NAME}/engine_options.txt ${TARGET_DIR}/engine/${PACKAGE_NAME}/
+    fi
+    echo -n ") " 1>&2
 }
 
 function build_yaneuraou() {
@@ -58,6 +60,7 @@ function build_yaneuraou() {
     VERSION=$3
     TARGET_DIR=$4
     ENGINE_DEFINES=$5
+    PATCH=$6
 
     echo -n "やねうら王をビルドしています(少し時間がかかります) ... " 1>&2
     pushd ${BUILD_DIR} >& /dev/null
@@ -65,14 +68,15 @@ function build_yaneuraou() {
     git clone ${REPOS} YaneuraOu >& YaneuraOu.build.log
     pushd YaneuraOu >& /dev/null
     (git checkout ${VERSION} 2>&1) >> ../YaneuraOu.build.log
+    patch -p1 < ${PATCH}
     popd >& /dev/null
 
-    # compile_yaneuraou YaneuraOu tanuki2018 YANEURAOU_2018_TNK_ENGINE YaneuraOu2018NNUE
-    # compile_yaneuraou YaneuraOu yomita2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPPT YaneuraOu2018KPPT
+    # compile_yaneuraou YaneuraOu tanuki2018 YANEURAOU_2018_TNK_ENGINE YaneuraOu2018NNUE ${TARGET_DIR} ${ENGINE_DEFINES}
+    # compile_yaneuraou YaneuraOu yomita2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPPT YaneuraOu2018KPPT ${TARGET_DIR} ${ENGINE_DEFINES}
     compile_yaneuraou YaneuraOu yaneuraou2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPP_KKPT Yaneuraou2018_kpp_kkpt ${TARGET_DIR} ${ENGINE_DEFINES}
-    # compile_yaneuraou YaneuraOu tanuki_mate MATE_ENGINE tanuki_mate
+    compile_yaneuraou YaneuraOu tanuki_mate MATE_ENGINE tanuki_mate ${TARGET_DIR} ${ENGINE_DEFINES}
 
-    echo " ... 完了" 1>&2
+    echo "... 完了" 1>&2
     popd >& /dev/null
 }
 
