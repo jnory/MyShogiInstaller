@@ -5,7 +5,7 @@ xmlns="http://schemas.datacontract.org/2004/07/MyShogi.Model.Shogi.EngineDefine"
   <BannerFileName>banner.png</BannerFileName>
   <Description>長手数の詰将棋が解ける詰将棋エンジンです。 詰手順が最短手数であることは保証されません。
   複数スレッドでの探索には対応していません。</Description>
-  <DescriptionSimple>tanuki-詰将棋エンジン</DescriptionSimple>
+  <DescriptionSimple>tanuki-詰将棋エンジン(MyShogiInstallerによる自動ビルド)</DescriptionSimple>
   <DisplayName>tanuki-詰将棋エンジン</DisplayName>
   <DisplayOrder>10006</DisplayOrder>
   <EngineExeName>tanuki_mate</EngineExeName>
