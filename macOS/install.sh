@@ -139,7 +139,6 @@ fi
 if [ ${START_FROM} -le 3 ]; then 
     build_yaneuraou ${PREFIX} ${YANEURAOU_REPOS} ${YANEURAOU_VERSION} ${ROOTDIR}/MacOS ${BASEDIR}/engine_defines ${BASEDIR}/common/YaneuraOu.patch
 fi
-exit
 
 if [ ${START_FROM} -le 4 ]; then 
     build_soundplayer ${PREFIX} ${SOUNDPLAYER_REPOS} ${SOUNDPLAYER_VERSION} macos macOS ${ROOTDIR}/MacOS dylib
