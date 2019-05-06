@@ -41,6 +41,11 @@ Ubuntuの場合、libpulse-devも必要です。
 monoは[公式サイト](https://www.mono-project.com/download)
 からインストーラーを使ってインストールして下さい。
 
+monoやmsbuildコマンドが使えるようにPATHを通しておいてください。
+例：
+
+    export PATH=/Library/Frameworks/Mono.framework/Home/bin:$PATH
+
 ## engine_define.xmlについて
 
 同梱してあるengine_define.xmlは、MyShogiのバイナリから生成させたサンプルXMLを元に改変しています。
