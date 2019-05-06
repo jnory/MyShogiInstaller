@@ -38,7 +38,8 @@ Ubuntuの場合、libpulse-devも必要です。
 
 入っていなければ事前にインストールしておいて下さい。
 なお、homebrewに入っているmonoでは起動しませんので
-monoは公式サイトからインストーラーを使ってインストールして下さい。
+monoは[公式サイト](https://www.mono-project.com/download)
+からインストーラーを使ってインストールして下さい。
 
 ## engine_define.xmlについて
 
