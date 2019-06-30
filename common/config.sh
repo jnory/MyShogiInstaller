@@ -5,7 +5,7 @@ MYSHOGI_REPOS=https://github.com/yaneurao/MyShogi.git
 MYSHOGI_VERSION=3a9e7b17b8a6daa809bfce391c68bec88c4302c4
 
 YANEURAOU_REPOS=https://github.com/yaneurao/YaneuraOu.git
-YANEURAOU_VERSION=6d6d503dd64b798ed474e5aca844b232e5682781
+YANEURAOU_VERSION=8a56754f48776bb487942f8e283de334bd4e9888
 
 SOUNDPLAYER_REPOS=https://github.com/jnory/MyShogiSoundPlayer.git
 SOUNDPLAYER_VERSION=2d3c08ef33a9f951aaef366aaa3cc7d5094aa8d7
