@@ -3,12 +3,12 @@
 xmlns="http://schemas.datacontract.org/2004/07/MyShogi.Model.Shogi.EngineDefine">
 
   <BannerFileName>banner.png</BannerFileName>
-  <Description>やねうら王のソースコードからMyShogiInstallerによって自動ビルドされたものです。モデルファイルが商用版と異なるため棋力設定の段位は実際の段位と異なります。
+  <Description>やねうら王のソースコードからMyShogiInstallerによって自動ビルドされたものです。棋力設定の段位は実際の段位と異なります。
   </Description>
-  <DescriptionSimple>やねうら王 2018年度版(MyShogiInstallerによる自動ビルド)</DescriptionSimple>
-  <DisplayName>やねうら王</DisplayName>
+  <DescriptionSimple>tanuki- WCSC29 版(MyShogiInstallerによる自動ビルド)</DescriptionSimple>
+  <DisplayName>tanuki-(WCSC29)</DisplayName>
   <DisplayOrder>10005</DisplayOrder>
-  <EngineExeName>Yaneuraou2018_kpp_kkpt</EngineExeName>
+  <EngineExeName>YaneuraOuNNUE</EngineExeName>
   <EngineOptionDescriptions>
     <EngineOptionDescription>
       <ComboboxDisplayName i:nil="true" />
@@ -128,17 +128,19 @@ xmlns="http://schemas.datacontract.org/2004/07/MyShogi.Model.Shogi.EngineDefine"
     </EngineOptionDescription>
     <EngineOptionDescription>
       <ComboboxDisplayName>
-      no_book,定跡なし,standard_book.db,標準定跡,yaneura_book1.db,やねうら大定跡,yaneura_book3.db,真やねうら定跡</ComboboxDisplayName>
+      no_book,定跡なし,standard_book.db,標準定跡,yaneura_book1.db,やねうら大定跡,yaneura_book3.db,真やねうら定跡,user_book1.db,テラショック定跡,user_book2.db,tanuki-定跡</ComboboxDisplayName>
       <Description>各エンジンのフォルダ配下のbookフォルダ内にある定跡ファイルが読み込まれます。 
 	  標準定跡 : 出現頻度の情報付き、評価値の情報なしの小さな定跡です。 
 	  やねうら大定跡 : 浅い読み(depth18)で作った評価値付きの大きな定跡です。評価値・depth情報付き、出現頻度情報なし。
       真やねうら定跡 : 深い読み(depth28)で作った評価値付きの小さな定跡です。評価値・depth情報付き、出現頻度情報なし。
+      100テラショック定跡(WCSC29) : https://github.com/yaneurao/YaneuraOu/releases/tag/BOOK-700T-Shock BookDepthLimitは0で利用。
+      tanuki-(WCSC29) : https://github.com/nodchip/tanuki-/releases/tag/tanuki-wcsc29-2019-05-06
 	  </Description>
       <DescriptionSimple>コンピューターが用いる定跡ファイル。</DescriptionSimple>
       <DisplayName>定跡ファイル</DisplayName>
       <Hide>false</Hide>
       <Name>BookFile</Name>
-      <UsiBuildString>option name BookFile type combo default standard_book.db var no_book var standard_book.db var yaneura_book1.db var yaneura_book3.db</UsiBuildString>
+      <UsiBuildString>option name BookFile type combo default standard_book.db var no_book var standard_book.db var yaneura_book1.db var yaneura_book3.db var 700T_book.db var tanuki_book.db</UsiBuildString>
     </EngineOptionDescription>
     <EngineOptionDescription>
       <ComboboxDisplayName i:nil="true" />

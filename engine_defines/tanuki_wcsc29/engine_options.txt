@@ -1,0 +1,2 @@
+option name EvalDir type string default ../../eval/tanuki_wcsc29
+option name BookDir type string default ../../book

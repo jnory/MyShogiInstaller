@@ -1,29 +1,24 @@
-commit cfe4548aba8adca517b02554cd1f649714931d44
-Author: Jun-ya Norimatsu <do-not-send-to-this-address@jnory.com>
-Date:   Sun Feb 3 20:07:56 2019 +0900
-
-    Use pthread directly
-
 diff --git a/source/thread.cpp b/source/thread.cpp
-index 06d7ac3..e3d3537 100644
+index 50e887f..51409c7 100644
 --- a/source/thread.cpp
 +++ b/source/thread.cpp
-@@ -1,12 +1,39 @@
+@@ -1,4 +1,6 @@
 -﻿#include "thread.h"
 +﻿#include <pthread.h>
 +
 +#include "thread.h"
+ #include "usi.h"
  
  ThreadPool Threads;		// Global object
- 
+@@ -6,8 +8,33 @@ ThreadPool Threads;		// Global object
  void* Thread::operator new(size_t s) { return aligned_malloc(s, alignof(Thread)); }
  void Thread::operator delete(void*p) noexcept { aligned_free(p); }
  
 -Thread::Thread(size_t n) : idx(n) , stdThread(&Thread::idle_loop, this)
 +void *start_thread(void *args) {
-+	auto *th = (Thread *)args;
-+	th->idle_loop();
-+	return nullptr;
++    auto *th = (Thread *)args;
++    th->idle_loop();
++    return nullptr;
 +}
 +
 +Thread::Thread(size_t n) : idx(n)
@@ -49,27 +44,27 @@ index 06d7ac3..e3d3537 100644
 +
  	// スレッドはsearching == trueで開始するので、このままworkerのほう待機状態にさせておく
  	wait_for_search_finished();
- 
-@@ -24,7 +51,11 @@ Thread::~Thread()
+ }
+@@ -21,7 +48,11 @@ Thread::~Thread()
  	// 探索は終わっているのでexitフラグをセットしてstart_searching()を呼べば終了するはず。
  	exit = true;
  	start_searching();
 -	stdThread.join();
-+	int err = pthread_join(th, nullptr);
-+	if(err != 0) {
-+		sync_cout << "Failed to join thread: error code=" << err << sync_endl;
-+		abort();
-+	}
++    int err = pthread_join(th, nullptr);
++    if(err != 0) {
++        sync_cout << "Failed to join thread: error code=" << err << sync_endl;
++        abort();
++    }
  }
  
  // このクラスが保持している探索で必要なテーブル(historyなど)をクリアする。
 diff --git a/source/thread.h b/source/thread.h
-index d005018..408cd42 100644
+index d51717a..3a2faee 100644
 --- a/source/thread.h
 +++ b/source/thread.h
-@@ -35,8 +35,9 @@ class Thread
- 	// 探索中であるかを表すフラグ。プログラムを簡素化するため、事前にtrueにしてある。
- 	bool searching = true;
+@@ -34,8 +34,9 @@ class Thread
+ 	// searching : 探索中であるかを表すフラグ。プログラムを簡素化するため、事前にtrueにしてある。
+ 	bool exit = false , searching = true;
  
 -	// wrapしているstd::thread
 -	std::thread stdThread;

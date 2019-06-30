@@ -103,6 +103,13 @@ function check_env() {
         echo "NG" 1>&2
         exit 1
     fi
+
+    echo -n "unar ... " 1>&2
+    if ! (unar -v >& /dev/null); then
+        echo "NG" 1>&2
+        exit 1
+    fi
+
     echo "ok" 1>&2
 
     echo "必要なコマンドは揃っているようです" 1>&2
@@ -157,5 +164,5 @@ if [ ${START_FROM} -le 7 ]; then
 fi
 
 if [ ${START_FROM} -le 8 ]; then 
-    download_books ${PREFIX} ${BOOK_PATH_STANDARD} ${BOOK_PATH_YANEURA_BOOK1} ${BOOK_PATH_YANEURA_BOOK3} ${BASEDIR}/checksums ${ROOTDIR}/MacOS
+    download_books ${PREFIX} ${BOOK_PATH_STANDARD} ${BOOK_PATH_YANEURA_BOOK1} ${BOOK_PATH_YANEURA_BOOK3} ${BOOK_PATH_700T_SHOCK} ${BASEDIR}/checksums ${ROOTDIR}/MacOS
 fi

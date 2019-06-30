@@ -16,9 +16,10 @@ IMAGES_VERSION=2b53ec8653509c97e9717d1bf485b7e9027ce163
 SOUND_REPOS=https://github.com/matarillo/MyShogiSound.git
 SOUND_VERSION=3b192b0c6797e217ae3472196570071c19a25550
 
-MODEL_PATH="https://drive.google.com/uc?export=download&id=0Bzbi5rbfN85NSk1qQ042U0RnUEU"
+MODEL_PATH="https://github.com/nodchip/tanuki-/releases/download/tanuki-wcsc29-2019-05-06/tanuki-wcsc29-2019-05-06.7z"
 BOOK_PATH_STANDARD="https://github.com/yaneurao/YaneuraOu/releases/download/v4.73_book/standard_book.zip"
 BOOK_PATH_YANEURA_BOOK1="https://github.com/yaneurao/YaneuraOu/releases/download/v4.73_book/yaneura_book1_V101.zip"
 BOOK_PATH_YANEURA_BOOK3="https://github.com/yaneurao/YaneuraOu/releases/download/v4.73_book/yaneura_book3.zip"
+BOOK_PATH_700T_SHOCK="https://github.com/yaneurao/YaneuraOu/releases/download/BOOK-700T-Shock/700T-shock-book.zip"
 ##############
 
