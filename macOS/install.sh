@@ -103,13 +103,13 @@ function check_env() {
         echo "NG" 1>&2
         exit 1
     fi
+    echo "ok" 1>&2
 
     echo -n "unar ... " 1>&2
     if ! (unar -v >& /dev/null); then
         echo "NG" 1>&2
         exit 1
     fi
-
     echo "ok" 1>&2
 
     echo "必要なコマンドは揃っているようです" 1>&2
@@ -135,7 +135,7 @@ if [ ${START_FROM} -le 0 ]; then
     check_env
 fi
 
-if [ ${START_FROM} -le 1 ]; then 
+if [ ${START_FROM} -le 1 ]; then
     prepare_app
 fi
 

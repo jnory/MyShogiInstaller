@@ -100,13 +100,13 @@ function check_env() {
         echo "NG" 1>&2
         exit 1
     fi
+    echo "ok" 1>&2
 
     echo -n "unar ... " 1>&2
     if ! (unar -v >& /dev/null); then
         echo "NG" 1>&2
         exit 1
     fi
-
     echo "ok" 1>&2
 
     echo "必要なコマンドは揃っているようです" 1>&2
