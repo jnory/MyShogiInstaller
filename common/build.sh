@@ -37,8 +37,8 @@ function compile_yaneuraou() {
     for ARCH in avx2 sse42 sse41 sse2; do
         echo -n "${ARCH} " 1>&2
 
-        (make clean YANEURAOU_EDITION=${YANEURAOU_EDITION} 2>&1) >> ../YaneuraOu.build.log
-        (make -j1 ${ARCH} COMPILER=g++ YANEURAOU_EDITION=${YANEURAOU_EDITION} 2>&1) >> ../YaneuraOu.build.log
+        (make clean YANEURAOU_EDITION=${YANEURAOU_EDITION} 2>&1) >> ../../YaneuraOu.build.log
+        (make -j1 normal TARGET_CPU=`echo ${ARCH} | tr '[a-z]' '[A-Z]'` COMPILER=g++ YANEURAOU_EDITION=${YANEURAOU_EDITION} 2>&1) >> ../../YaneuraOu.build.log
 
         mkdir -p ${TARGET_DIR}/engine/${PACKAGE_NAME}
         OUT=${TARGET_DIR}/engine/${PACKAGE_NAME}/${BASE}_${ARCH}.exe
@@ -71,9 +71,9 @@ function build_yaneuraou() {
     patch -p1 < ${PATCH}
     popd >& /dev/null
 
-    # compile_yaneuraou YaneuraOu tanuki2018 YANEURAOU_2018_TNK_ENGINE YaneuraOu2018NNUE ${TARGET_DIR} ${ENGINE_DEFINES}
+    compile_yaneuraou YaneuraOu tanuki_wcsc29 YANEURAOU_ENGINE_NNUE YaneuraOuNNUE ${TARGET_DIR} ${ENGINE_DEFINES}
     # compile_yaneuraou YaneuraOu yomita2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPPT YaneuraOu2018KPPT ${TARGET_DIR} ${ENGINE_DEFINES}
-    compile_yaneuraou YaneuraOu yaneuraou2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPP_KKPT Yaneuraou2018_kpp_kkpt ${TARGET_DIR} ${ENGINE_DEFINES}
+    # compile_yaneuraou YaneuraOu yaneuraou2018 YANEURAOU_2018_OTAFUKU_ENGINE_KPP_KKPT Yaneuraou2018_kpp_kkpt ${TARGET_DIR} ${ENGINE_DEFINES}
     compile_yaneuraou YaneuraOu tanuki_mate MATE_ENGINE tanuki_mate ${TARGET_DIR} ${ENGINE_DEFINES}
 
     echo "... 完了" 1>&2

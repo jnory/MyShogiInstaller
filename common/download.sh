@@ -52,17 +52,16 @@ function download_models() {
 
     pushd ${BUILD_DIR} >& /dev/null
 
-    # reference: https://qiita.com/namakemono/items/c963e75e0af3f7eed732
-    curl -sc ${BUILD_DIR}/model_download_cookie ${URL} >& /dev/null
-    CONFIRMATION_CODE=`cat ${BUILD_DIR}/model_download_cookie | grep '_warning_' | rev | cut -f1 | rev`
-    curl -Lb ${BUILD_DIR}/model_download_cookie ${URL}"&confirm=${CONFIRMATION_CODE}" -o rezero_kpp_kkpt_epoch4.zip >& /dev/null
+    curl -L ${URL} -o tanuki-wcsc29-2019-05-06.7z >& /dev/null
 
-    if ! (shasum -a 256 -c ${CHECKSUMS}/rezero_kpp_kkpt_epoch4.zip.sha256 >& /dev/null); then
+    if ! (shasum -a 256 -c ${CHECKSUMS}/tanuki-wcsc29-2019-05-06.7z.sha256 >& /dev/null); then
         echo "ダウンロードしたモデルファイルが壊れています" 1>&2
         exit 1
     fi
-    unzip rezero_kpp_kkpt_epoch4.zip >& /dev/null
-    mv rezero_kpp_kkpt_epoch4/*.bin ${TARGET_DIR}/eval
+    unar tanuki-wcsc29-2019-05-06.7z >& /dev/null
+    mkdir -p ${TARGET_DIR}/eval/tanuki_wcsc29
+    mv tanuki-wcsc29-2019-05-06/eval/*.bin ${TARGET_DIR}/eval/tanuki_wcsc29
+    mv tanuki-wcsc29-2019-05-06/book/user_book2.db ${TARGET_DIR}/book/user_book2.db
 
     popd >& /dev/null
 
@@ -74,8 +73,9 @@ function download_books() {
     URL_STANDARD=$2
     URL_BOOK1=$3
     URL_BOOK3=$4
-    CHECKSUMS=$5
-    TARGET_DIR=$6
+    URL_700T_SHOCK=$5
+    CHECKSUMS=$6
+    TARGET_DIR=$7
 
     echo -n "定跡ファイルをダウンロードしています ... " 1>&2
 
@@ -104,6 +104,15 @@ function download_books() {
     fi
     unzip yaneura_book3.zip >& /dev/null
     mv yaneura_book3.db ${TARGET_DIR}/book
+
+    curl -L ${URL_700T_SHOCK} -O >& /dev/null
+    if ! (shasum -a 256 -c ${CHECKSUMS}/700T-shock-book.zip.sha256 >& /dev/null); then
+        echo "ダウンロードした定跡ファイル(700T-shock-book.zip)が壊れています" 1>&2
+        exit 1
+    fi
+    (LC_ALL=C unzip 700T-shock-book.zip >& /dev/null) || true
+    mv user_book1.db ${TARGET_DIR}/book/user_book1.db
+
 
     popd >& /dev/null
 
